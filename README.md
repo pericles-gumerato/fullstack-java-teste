@@ -37,7 +37,7 @@ Vamos ser práticos e diretos, se você quer trabalhar conosco siga os passos ab
 
 # O Desafio de Notas Fiscais e Cálculo de Impostos
 
-Você deverá criar 2 aplicações para cadastramento de notas fiscais e cálculo de impostos:
+Você deverá criar 2 aplicações para cadastramento de impostos fiscais e cálculo de impostos:
 
 **Back-end:** aplicação JavaEE baseada em Web Services no padrão RESTful JAX-RS.
 
@@ -46,9 +46,9 @@ Você deverá criar 2 aplicações para cadastramento de notas fiscais e cálcul
 **Requisitos:**
 
 - Permitir o cadastro de clientes (empresas)
-- Permitir o registro de notas fiscais emitidas
+- Permitir o registro de impostos fiscais emitidas
 - Realizar o cálculo dos impostos devidos por mês e ano de referência
-- Permitir a consulta de notas fiscais e impostos por mês e ano de referência
+- Permitir a consulta de impostos fiscais e impostos por mês e ano de referência
 - Permitir marcar o imposto como PAGO
 
 O cadastro do cliente da Contabilizei deve conter as seguintes informações:
@@ -59,7 +59,7 @@ O cadastro do cliente da Contabilizei deve conter as seguintes informações:
 * Anexos (no caso de Regime Simples Nacional)
 * E-mail
 
-O cliente da Contabilizei deve registrar as notas fiscais para que seus impostos sejam calculados mensalmente. 
+O cliente da Contabilizei deve registrar as impostos fiscais para que seus impostos sejam calculados mensalmente.
 
 As Notas Fiscais contém as seguintes informações:
 
@@ -69,7 +69,7 @@ As Notas Fiscais contém as seguintes informações:
 * Valor
 * Anexo (1,2,3)
 
-Quando o cliente terminar de lançar suas notas fiscais, ele poderá solicitar o cálculo de seus impostos do mês. Cada mês deverá ter apenas 1 imposto de cada tipo. Os impostos deverão ter as seguintes informações:
+Quando o cliente terminar de lançar suas impostos fiscais, ele poderá solicitar o cálculo de seus impostos do mês. Cada mês deverá ter apenas 1 imposto de cada tipo. Os impostos deverão ter as seguintes informações:
 
 * Tipo de Imposto (Simples Nacional, Imposto de Renda, ISS, Cofins)
 * Vencimento
@@ -79,7 +79,7 @@ Quando o cliente terminar de lançar suas notas fiscais, ele poderá solicitar o
 
 **Regras para o cálculo dos impostos:**
 
-- Se a empresa for do Simples Nacional, somente o imposto Simples Nacional é calculado. Para isso, somam-se as notas fiscais do mês por anexo e aplicam-se, para cada anexo as alíquotas conforme a tabela abaixo e criamos esse imposto.
+- Se a empresa for do Simples Nacional, somente o imposto Simples Nacional é calculado. Para isso, somam-se as impostos fiscais do mês por anexo e aplicam-se, para cada anexo as alíquotas conforme a tabela abaixo e criamos esse imposto.
 
 | Anexo                     | Alíquota de imposto  |
 | --------------------------|:---------------------|
@@ -98,7 +98,7 @@ Exemplo:
 
 Neste caso, será gerado 1 imposto do Tipo Simples Nacional cujo valor será R$ 610,00
 
-- Se a empresa for do Lucro Presumido, será necessário calcular o IRPJ, o ISS e o Cofins. Então, desconsideramos o anexo, somamos todas as notas fiscais do mês, aplicamos as alíquotas abaixo e criamos os impostos (IRPJ, ISS e Cofins).
+- Se a empresa for do Lucro Presumido, será necessário calcular o IRPJ, o ISS e o Cofins. Então, desconsideramos o anexo, somamos todas as impostos fiscais do mês, aplicamos as alíquotas abaixo e criamos os impostos (IRPJ, ISS e Cofins).
 
 | Tipo do imposto           | Alíquota de imposto  |
 | --------------------------|:---------------------|
