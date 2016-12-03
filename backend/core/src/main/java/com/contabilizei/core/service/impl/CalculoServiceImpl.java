@@ -6,6 +6,7 @@ import com.contabilizei.core.dao.NotaFiscalDao;
 import com.contabilizei.core.requestsandresponses.CalcularImpostosMesRequest;
 import com.contabilizei.core.requestsandresponses.CalcularImpostosMesResponse;
 import com.contabilizei.core.service.CalculoService;
+import com.contabilizei.core.util.DateUtils;
 import com.contabilizei.model.entity.Cliente;
 import com.contabilizei.model.entity.ImpostoMes;
 import com.contabilizei.model.entity.NotaFiscal;
@@ -121,6 +122,62 @@ public class CalculoServiceImpl implements CalculoService {
             return response;
         }
 
+        int page = 1;
+        List<NotaFiscal> notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, page);
+        if (notasFiscaisMes.size() == 0) {
+            response.setSucesso(false);
+            response.setMensagem("Não existem notas fiscais para o ano e mês de referência");
+            return response;
+        }
+
+        Long somaNotasMes = 0L;
+        while (notasFiscaisMes.size() > 0) {
+            for (NotaFiscal nf : notasFiscaisMes) {
+                somaNotasMes += nf.getValorCentavos();
+            }
+
+            // Get next fiscal notes
+            page++;
+            notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, page);
+        }
+
+        // Compute date
+        Calendar vencimento = Calendar.getInstance();
+        vencimento.setTime(DateUtils.finalDoMes(mesAnoReferencia));
+
+        // Create the tax registries
+        // IRPJ
+        ImpostoMes irpjMes = new ImpostoMes();
+        irpjMes.setClienteId(cliente.getId());
+        irpjMes.setMesAnoReferencia(mesAnoReferencia);
+        irpjMes.setPago(false);
+        irpjMes.setTipo(TipoImposto.IRPJ);
+        irpjMes.setValorCentavos(somaNotasMes * TipoImposto.IRPJ.getAliquotaPormil().get() / 1000);
+        irpjMes.setVencimento(vencimento.getTime());
+
+        impostoMesDao.criarImpostoMes(irpjMes);
+
+        // ISS
+        ImpostoMes issMes = new ImpostoMes();
+        issMes.setClienteId(cliente.getId());
+        issMes.setMesAnoReferencia(mesAnoReferencia);
+        issMes.setPago(false);
+        issMes.setTipo(TipoImposto.ISS);
+        issMes.setValorCentavos(somaNotasMes * TipoImposto.ISS.getAliquotaPormil().get() / 1000);
+        issMes.setVencimento(vencimento.getTime());
+
+        impostoMesDao.criarImpostoMes(issMes);
+
+        // ISS
+        ImpostoMes cofinsMes = new ImpostoMes();
+        cofinsMes.setClienteId(cliente.getId());
+        cofinsMes.setMesAnoReferencia(mesAnoReferencia);
+        cofinsMes.setPago(false);
+        cofinsMes.setTipo(TipoImposto.COFINS);
+        cofinsMes.setValorCentavos(somaNotasMes * TipoImposto.COFINS.getAliquotaPormil().get() / 1000);
+        cofinsMes.setVencimento(vencimento.getTime());
+
+        impostoMesDao.criarImpostoMes(cofinsMes);
 
         response.setSucesso(true);
         return response;

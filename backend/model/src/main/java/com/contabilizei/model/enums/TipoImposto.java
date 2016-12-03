@@ -7,15 +7,15 @@ import java.util.Optional;
  */
 public enum TipoImposto {
 
-    IRPJ(Optional.of(480)), ISS(Optional.of(200)), COFINS(Optional.of(300)), SIMPLES_NACIONAL(Optional.empty());
+    IRPJ(Optional.of(48L)), ISS(Optional.of(20L)), COFINS(Optional.of(30L)), SIMPLES_NACIONAL(Optional.empty());
 
-    private Optional<Integer> aliquotaPormil;
+    private Optional<Long> aliquotaPormil;
 
-    TipoImposto(Optional<Integer> aliquotaPormil) {
+    TipoImposto(Optional<Long> aliquotaPormil) {
         this.aliquotaPormil = aliquotaPormil;
     }
 
-    public Optional<Integer> getAliquotaPormil() {
+    public Optional<Long> getAliquotaPormil() {
         return aliquotaPormil;
     }
 
