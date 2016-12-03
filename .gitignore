@@ -1,5 +1,10 @@
 .DS_Store
-.idea/
+.idea
 *.iml
 *.class
 target/
+logs/*
+!.gitkeep
+node_modules/
+bower_components/
+tmp

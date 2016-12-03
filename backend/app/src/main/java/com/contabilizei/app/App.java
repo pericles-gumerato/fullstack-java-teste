@@ -1,5 +1,7 @@
 package com.contabilizei.app;
 
+import com.contabilizei.app.filter.CORSResponseFilter;
+
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -14,6 +16,7 @@ public class App {
     public static void main(String args[]) throws Exception {
         ResourceConfig config = new ResourceConfig();
         config.packages("com.contabilizei.app.controller");
+        config.register(CORSResponseFilter.class);
         ServletHolder servlet = new ServletHolder(new ServletContainer(config));
 
         Server server = new Server(8080);
