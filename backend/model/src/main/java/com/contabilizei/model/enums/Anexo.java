@@ -5,15 +5,15 @@ package com.contabilizei.model.enums;
  */
 public enum Anexo {
 
-    COMERCIO(600), INDUSTRIA(850), PRESTACAO_DE_SERVICOS(1100);
+    COMERCIO(60L), INDUSTRIA(85L), PRESTACAO_DE_SERVICOS(110L);
 
-    private int aliquotaPormil;
+    private long aliquotaPormil;
 
-    Anexo(int aliquotaPormil) {
+    Anexo(long aliquotaPormil) {
         this.aliquotaPormil = aliquotaPormil;
     }
 
-    public int getAliquotaPormil() {
+    public long getAliquotaPormil() {
         return aliquotaPormil;
     }
 }

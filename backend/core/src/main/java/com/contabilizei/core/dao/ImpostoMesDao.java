@@ -10,6 +10,8 @@ import java.util.List;
  */
 public interface ImpostoMesDao {
 
+    ImpostoMes criarImpostoMes(ImpostoMes impostoMes);
+
     /**
      * Marca um determinado imposto como pago.
      *

@@ -39,7 +39,7 @@ public class ServicesManager {
         this.cadastroService = new CadastroServiceImpl(clienteDao, notaFiscalDao);
         this.consultaService = new ConsultaServiceImpl(clienteDao, impostoMesDao, notaFiscalDao);
         this.updateService = new UpdateServiceImpl(impostoMesDao);
-        this.calculoService = new CalculoServiceImpl(clienteDao, impostoMesDao);
+        this.calculoService = new CalculoServiceImpl(clienteDao, impostoMesDao, notaFiscalDao);
     }
 
     public CadastroService getCadastroService() {
