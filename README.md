@@ -1,179 +1,143 @@
-# Por que trabalhar na Contabilizei
 
-**Eleita a melhor startup B2B da América Latina em 2016, a Contabilizei** é um escritório de contabilidade online, líder de mercado, com sede em Curitiba (PR). Nosso propósito é resolver a dor e burocracia de micro e pequenas empresas ao se manterem regulares com o governo. Somos contadores, só que online, simples assim. Acreditamos no poder da tecnologia para melhorar continuamente a vida das pessoas. 
+## Overview da solução implementada
 
-Se você tem espírito e comportamento empreendedor, muita disposição e proatividade para trabalhar em uma empresa em franca expansão, você é um forte candidato :)
+O sistema foi implementado de acordo com a especificação do projeto e consiste em uma aplicação REST de backend escrita em Java 8 e uma aplicação de frontend escrita em AngularJS. O sistema não possui autenticação e nem multitenancy. A solução permite executar as funções básicas requeridas:
 
-Como Desenvolvedor Full-stack você irá atuar no desenvolvimento de soluções em arquitetura Java Web MVC com RestFul APis (JAX-RS), integrações com outros sistemas (SOAP, XML, JSON), banco de dados NoSQL e soluções escaláveis, participando de todo o processo de desenvolvimento, desde tomadas de decisões à codificação e testes.
+* Cadastro de clientes (empresas)
+* Registro de impostos fiscais emitidas
+* Cálculo dos impostos devidos por mês e ano de referência
+* Consulta de impostos fiscais e impostos por mês e ano de referência
+* Marcar o imposto como PAGO e persistir o estado
 
-### O que fazem os Ninjas da Contabilizei? O que comem (e bebem)? Onde vivem?
+As seções a seguir descrevem as dependências e dão um overview de como configurar e executar a solução.
 
-Somos um time de desenvolvimento ágil, focado em fazer as coisas acontecerem. Trabalhamos com Kanban, entregas contínuas, Git, Cloud, aplicações distribuídas e mais uma porrada de tecnologias novas... Queremos que nosso cliente tenha o produto e a experiência mais fodásticos do planeta. Gostamos de compartilhar ideias, testar tecnologias e de cerveja :)
+#### Frontend
 
-# O trabalho por aqui
+Aplicação single page feita em AngularJS, HTML5 e CSS3, e Bootstrap. O projeto foi gerado a partir do clone do [**Angular Seed**](https://github.com/angular/angular-seed). 
 
-Que tal fazer parte de um time com atitude “get Fˆ%#ing things done”? Participar de uma das maiores disrupções no mercado? Ter a oportunidade de trabalhar com tecnologias e conceitos inovadores, como:
-* Práticas ágeis como Kanban / Scrum
-* Google Cloud Platform
-* Escalabilidade
-* Micro services e aplicações distribuídas
-* Kubernetes
-* Git
-* AngularJs
-* Material Design
-* BDD
+**Bibliotecas e frameworks**
 
-Mais informações sobre a vaga você encontra aqui: [Desenvolvedor Full Stack Java na Contabilizei](https://jobs.lever.co/contabilizei/826c32bd-d800-475a-9f05-531e86dc4ea3)
+* [**Bootstrap**](http://getbootstrap.com/)
+* [**Angular JS**](http://angularjs.org/)
 
-# O que preciso fazer?
+#### Backend
 
-Vamos ser práticos e diretos, se você quer trabalhar conosco siga os passos abaixo:
+Aplicação escrita em Java 8 e utiliza Jersey e utilizando a implementação JPA do Hibernate. O banco de dados escolhido é PostgreSQL 9.4. O código segue o padrão MVC e as APIs se comunicam via mensagens JSON.
 
-* Faça um "fork" desse projeto para sua conta GitHub.
-* Implemente o desafio descrito no tópico abaixo.
-* Faça um push para seu repositório com o desafio implementado.
-* Envie um email para (souninja@contabilizei.com.br) avisando que finalizou o desafio com a url do seu fork.
-* Cruze os dedos e aguarde nosso contato.
+**Bibliotecas e frameworks**
 
-# O Desafio de Notas Fiscais e Cálculo de Impostos
+* [**Jersey**](https://jersey.java.net)
+* [**Jetty**](http://www.eclipse.org/jetty/)
+* [**Hibernate**](http://hibernate.org)
 
-Você deverá criar 2 aplicações para cadastramento de impostos fiscais e cálculo de impostos:
+## Setup do sistema
 
-**Back-end:** aplicação JavaEE baseada em Web Services no padrão RESTful JAX-RS.
+#### Requisitos
 
-**Front-end:** Single Page Application que se comunique com estes serviços.
+Antes de tudo, a máquina esteja preparada com os seguintes softwares:
 
-**Requisitos:**
+* [**JDK Java 8**](http://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html)
+* [**NPM**](https://www.npmjs.com/package/npm)
+* [**Bower**](https://bower.io/)
+* [**PostgreSQL 9.4**](https://www.postgresql.org/download/)
+* [**Maven 3.x**](https://maven.apache.org/download.cgi)
 
-- Permitir o cadastro de clientes (empresas)
-- Permitir o registro de impostos fiscais emitidas
-- Realizar o cálculo dos impostos devidos por mês e ano de referência
-- Permitir a consulta de impostos fiscais e impostos por mês e ano de referência
-- Permitir marcar o imposto como PAGO
+#### Repositório
 
-O cadastro do cliente da Contabilizei deve conter as seguintes informações:
+you@machine:~$ git clone https://github.com/pericles-gumerato/fullstack-java-teste.git
 
-* Razão Social
-* CNPJ
-* Regime Tributário (Simples Nacional ou Lucro Presumido)
-* Anexos (no caso de Regime Simples Nacional)
-* E-mail
+you@machine:~$ cd fullstack-java-teste
 
-O cliente da Contabilizei deve registrar as impostos fiscais para que seus impostos sejam calculados mensalmente.
+#### Database
 
-As Notas Fiscais contém as seguintes informações:
+##### Configuração de usuário
 
-* Numero da Nota fiscal
-* Data de emissão
-* Descrição (Apenas texto. Pode ser um serviço prestado, um produto vendido ou produzido)
-* Valor
-* Anexo (1,2,3)
+Por padrão, a aplicação utiliza o usuário/password contabilizei/contabilizei para criação do schema. Caso deseje criar este mesmo usuário, existe um arquivo .sql no repositório em backend/init_user.sql. Ao executá-lo como administrador, um usuário 'contabilizei' com senha 'contabilizei' é criado no banco de dados.
 
-Quando o cliente terminar de lançar suas impostos fiscais, ele poderá solicitar o cálculo de seus impostos do mês. Cada mês deverá ter apenas 1 imposto de cada tipo. Os impostos deverão ter as seguintes informações:
+O schema é criado automaticamente utilizando-se o [**Flyway DB**](https://flywaydb.org/), basta executar os comandos abaixo:
 
-* Tipo de Imposto (Simples Nacional, Imposto de Renda, ISS, Cofins)
-* Vencimento
-* Valor
-* Mês e ano de referência (por exemplo, 10/2016)
-* Pago ou não
+Caso deseje alterar o usuário de criação do schema, basta editar o arquivo db-schema/src/main/resources/flywayConfig.properties com o usuário e o endereço do servidor.
 
-**Regras para o cálculo dos impostos:**
+##### Criação do schema
 
-- Se a empresa for do Simples Nacional, somente o imposto Simples Nacional é calculado. Para isso, somam-se as impostos fiscais do mês por anexo e aplicam-se, para cada anexo as alíquotas conforme a tabela abaixo e criamos esse imposto.
+Basta executar os comandos a seguir:
 
-| Anexo                     | Alíquota de imposto  |
-| --------------------------|:---------------------|
-| 1 - Comércio              | 6%                   |
-| 2 - Indústria             | 8,5%                 |
-| 3 - Prestação de serviços | 11%                  |
+you@machine:~$ cd fullstack-java-teste
 
-Exemplo:
+you@machine:~$ cd backend/db-schema
 
-| Número da nota | Valor      | Anexo | Valor x Alíquota |
-| ---------------|:-----------|:------|:-----------------|
-| 001            | 1.000,00   | 1     | 60,00            |
-| 002            | 5.000,00   | 3     | 550,00           |
-
-**Total Imposto Simples Nacional = R$ 610,00**
-
-Neste caso, será gerado 1 imposto do Tipo Simples Nacional cujo valor será R$ 610,00
-
-- Se a empresa for do Lucro Presumido, será necessário calcular o IRPJ, o ISS e o Cofins. Então, desconsideramos o anexo, somamos todas as impostos fiscais do mês, aplicamos as alíquotas abaixo e criamos os impostos (IRPJ, ISS e Cofins).
-
-| Tipo do imposto           | Alíquota de imposto  |
-| --------------------------|:---------------------|
-| IRPJ                      | 4,8%                 |
-| ISS                       | 2%                   |
-| COFINS                    | 3%                   |
-
-Exemplo:
-
-| Número da nota | Valor      | IRPJ      | ISS    |COFINS      |
-| ---------------|:-----------|:----------|:-------|:-----------|
-| 001            | 1.000,00   | 48,00     | 20,00  |30,00       |
-| 002            | 500,00     | 24,00     | 10,00  |15,00       |
-
-**Total de impostos Lucro Presumido: IRPJ R$ 72,00, ISS R$ 30,00, COFINS R$ 45,00**
-
-Neste caso, serão gerados 3 impostos (IR, ISS e Cofins) cujos valores serão (R$ 72, R$ 30 e R$ 45)
+you@machine:~$ mvn clean install flyway:migrate
 
 
-Após o cálculo dos impostos, o cliente ainda poderá consultar quais impostos está devendo por mês e marcar os impostos pagos.
+#### Backend
 
-### Tecnologias
+##### Configuração
+Após configurar o banco de dados, a aplicação de backend deve ser configurada com a porta do servidor (padrão 8080) e os dados de conexão com banco:
 
-Escolha umas das opções abaixo para implementar sua solução. A modelagem dos dados fica a seu critério. Não se preocupe com autenticação ou multitenancy.
+* A porta do servidor deve ser configurada no arquivo backend/app/src/main/resources/config.properties
+* Os parâmetros de configuração com o banco devem ser configurados no arquivo backend/app/src/main/resources/META-INF/persistence.xml
 
-#### BACK-END
 
-**Opção 1**
+##### Execução
 
-* Aplicação JavaEE utilizando framework [**Google App Engine para Java**](https://cloud.google.com/appengine/)
-* Banco de dados NOSQL [Datastore](https://cloud.google.com/datastore/)
-* RESTFul API com [Google Endpoints](https://cloud.google.com/appengine/docs/java/endpoints/) ou Jersey JAX-RS
+you@machine:~$ cd fullstack-java-teste
 
-**Opção 2**
+you@machine:~$ cd backend
 
-* Aplicação pura Java EE (não utilize Spring, Struts, EJB, etc)
-* RESTful API JAX-RS utilizando Servlets ou framework Jersey
-* Banco de dados SQL (MySQL, PostgreSQL, HSQLDB) com JPA ou NOSQL(MongoDB)
+you@machine:~$ mvn clean install
 
-#### FRONT-END
+you@machine:~$ cd app
 
-* Single Page Application utilizando apenas HTML5 e CSS3 
-* Javascript puro / JQuery (e plugins)
-* AngularJS 1.x
-* Bootstrap (http://getbootstrap.com/) ou Angular Material Design (será diferencial)
+you@machine:~$ mvn exec:java
 
-**Recomendações gerais:**
 
-* Não utilize frameworks ou BD que não foram indicados
-* Para servidor de aplicação utilize Jetty ou Tomcat (Não utilize: JBOSS, Wildfly ou qualquer outro servidor. Por quê? Critério de facilidade de configuração)
-* Utilize o Maven para gerenciamento de dependências
-* Utilizar automatizadores como Bower, Gulp, Grant é opcional.
+#### Frontend
 
-### Arquitetura e documentação
+##### Configuração
 
-No arquivo README do projeto explique o funcionamento e a arquitetura da solução adotada na sua implementação. Descreva também os passos para executar corretamente seu projeto.
+A aplicação possui duas configurações básicas: o host/porta do backend e a porta em que o servidor local sobe:
 
-### Avaliação
+* A configuração do host do backend está em frontend/app/app.js, nas linhas 13 e 14. Caso deseje alterá-los, basta editar este arquivo.
+* A configuração da porta de execução do servidor está em frontend/package.json, na linha 26.
 
-Entre os critérios de avaliação estão:
+##### Execução
 
-* Facilidade de configuração do projeto
-* Performance
-* Código limpo e organização
-* Documentação de código
-* Documentação do projeto (readme)
-* Arquitetura
-* Boas práticas de desenvolvimento
-* Design Patterns
+you@machine:~$ cd fullstack-java-teste
 
-#### Bonus
+you@machine:~$ cd frontend
 
-Se voce fosse utilizar esse sistema comercialmente, que alterações vc faria para escalar e/ou facilitar a vida do usuario? OBS: Voce pode descrever isso aqui ou mostrar na implementação.
+you@machine:~$ npm start
 
-# Sobre você
+Após inicializar o ambiente, o npm deve executar a aplicação (por padrão, a aplicação sobe na porta 8000).
 
-Queremos saber um pouco mais sobre você também :) Por favor, responda o questionário do arquivo [questions.md](questions.md) e envie junto com seu projeto.
 
+
+## Usando a aplicação
+
+Por padrão, a aplicação pode ser acessada em http://localhost:8080 e é uma single-page app simples. Existe uma barra onde a funcionalidade desejada deve ser selecionada e a tela correspondente é mostrada.
+
+Um fluxo típico de uso poderia ser:
+
+1. Cadastra cliente
+2. Cadastra notas fiscais emitidas
+3. Lista (verifica) notas fiscais cadastradas
+4. Calcula impostos
+5. Lista os impostos
+6. Na tela de listagem de impostos, marca os impostos como pago
+
+
+## Reposta Bonus
+
+**Pergunta** : Se voce fosse utilizar esse sistema comercialmente, que alterações vc faria para escalar e/ou facilitar a vida do usuario? OBS: Voce pode descrever isso aqui ou mostrar na implementação.
+
+Divido a resposta em duas partes, a do sistema e a do usuário.
+
+##### Sistema
+
+O sistema deveria possuir mecanismos úteis para escalar, como cache local e distribuído onde fosse possível/necessário para diminuir os acessos ao banco. Uma ideia seria montar uma (ou mais) aplicação separada da aplicação principal para o cálculo de impostos (função que talvez fosse assíncrona), de forma que não houvesse um impacto direto/imediato na aplicação quando o usuário pedisse para o sistema calcular seus impostos. Para escalabilidade, dividir o sistema em micro serviços com comunicação assíncrona entre eles é o melhor approach. Além disso, certamente parte dos dados pode ser armazenado em um banco de dados não relacional. Se a modelagem for bem feita, o sistema se tornaria muito mais performático.
+
+Para ser utilizado comercialmente, seria necessário implementar testes unitários e de integração em todo o sistema para evitar features quebradas e ter mais segurança nas atualizações e na construção de novas funcionalidades.
+
+##### Usuário
+
+A interface está muito crua e falta um bom tratamento de erros de fluxo. O layout da interface não ficou bom e pode ser muito melhorado. Acredito que uma integração com um sistema de e-mail lembrando que o usuário possui impostos prestes a vencer é uma ótima feature. Além disso deve ser possível cadastrar informações de contato dos clientes.
