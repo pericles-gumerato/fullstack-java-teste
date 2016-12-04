@@ -1,0 +1,53 @@
+/* app css stylesheet */
+
+html *
+{
+    font-family: 'Roboto', sans-serif;
+}
+
+.top {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    padding: 0.5em 0 0.5em 0.5em;
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.top > li {
+    display: inline;
+}
+
+.top > li + li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu {
+    list-style: none;
+    border-bottom: 0.2em solid black;
+    margin-bottom: 2em;
+    padding: 0.5em 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li + li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.client-selector {
+    margin-bottom: 2em;
+    padding: 0.5em 0 0.5em 2em;
+    font-size: 15px;
+}
