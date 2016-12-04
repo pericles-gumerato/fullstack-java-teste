@@ -1,7 +1,6 @@
 /* app css stylesheet */
 
-html *
-{
+html * {
     font-family: 'Roboto', sans-serif;
 }
 
@@ -66,7 +65,6 @@ html *
 .listaItensNotas > li + li:before {
     padding-right: 0.3em;
 }
-
 
 .listaItensImpostos {
     list-style: none;
