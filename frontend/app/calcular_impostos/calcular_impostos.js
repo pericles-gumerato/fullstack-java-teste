@@ -9,24 +9,27 @@ angular.module('contabilizeiApp.calcular_impostos', ['ngRoute'])
         });
     }])
 
-    .controller('CalcularImpostosCtrl', ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
+    .controller('CalcularImpostosCtrl', ['$scope', '$http', '$sce', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, $sce, backendAddress) {
         var dataObj = {
             'maxPorPagina': 1000
         };
+
         var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/consulta/clientes', dataObj);
 
         res.success(function (data, status, headers, config) {
             $scope.clientes = data.result.clientes;
         });
         res.error(function (data, status, headers, config) {
-            console.error('ERROR');
-            console.error(data);
-            alert('failure message: ' + JSON.stringify({data: data}));
+            $scope.mensagemErro = $sce.trustAsHtml('Erro ao recuperar clientes!');
         });
 
         $scope.calcularImpostos = function (clienteId, mes, ano) {
+            // Clean messages
+            $scope.mensagemErro = $sce.trustAsHtml('');
+            $scope.mensagemStatus = $sce.trustAsHtml('');
+
             if (clienteId == undefined || mes == undefined || ano == undefined) {
-                $scope.mensagemErro = 'Por favor selecione todos os valores para a operação.';
+                $scope.mensagemErro = $sce.trustAsHtml('Por favor selecione todos os valores para a operação.');
                 return;
             }
             var dataObj = {
@@ -37,14 +40,14 @@ angular.module('contabilizeiApp.calcular_impostos', ['ngRoute'])
             var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/calculo/impostos_mes', dataObj);
 
             res.success(function (data, status, headers, config) {
-                if(!data.result.sucesso) {
+                if (!data.result.sucesso) {
                     $scope.mensagemErro = data.result.mensagem; // TODO This SHOULD be mapped with an error code, but I'm doing this because of the short time.
                     return;
                 }
-                $scope.mensagemStatus = 'Cálculo realizado com sucesso';
+                $scope.mensagemStatus = $sce.trustAsHtml('Cálculo realizado com sucesso');
             });
             res.error(function (data, status, headers, config) {
-                $scope.mensagemStatus = 'Erro ao realizar a ação.';
+                $scope.mensagemStatus = $sce.trustAsHtml('Erro ao realizar a ação.');
             });
         };
     }]);

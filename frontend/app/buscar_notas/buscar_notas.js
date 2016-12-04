@@ -9,10 +9,11 @@ angular.module('contabilizeiApp.buscar_notas', ['ngRoute'])
         });
     }])
 
-    .controller('BuscarNotasCtrl', ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
+    .controller('BuscarNotasCtrl', ['$scope', '$http', '$sce', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, $sce, backendAddress) {
         var dataObj = {
             'maxPorPagina': 1000
         };
+
         $scope.notas = [];
         var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/consulta/clientes', dataObj);
 
@@ -20,14 +21,16 @@ angular.module('contabilizeiApp.buscar_notas', ['ngRoute'])
             $scope.clientes = data.result.clientes;
         });
         res.error(function (data, status, headers, config) {
-            console.error('ERROR');
-            console.error(data);
-            alert('failure message: ' + JSON.stringify({data: data}));
+            $scope.mensagemErro = $sce.trustAsHtml('Erro ao recuperar clientes!');
         });
 
         $scope.buscarNotas = function (clienteId, mes, ano) {
+            // Clean messages
+            $scope.mensagemErro = $sce.trustAsHtml('');
+            $scope.mensagemStatus = $sce.trustAsHtml('');
+
             if (clienteId == undefined || mes == undefined || ano == undefined) {
-                $scope.mensagemErro = 'Por favor selecione todos os valores para a busca.';
+                $scope.mensagemErro = $sce.trustAsHtml('Por favor selecione todos os valores para a busca.');
                 return;
             }
             var dataObj = {
@@ -41,7 +44,7 @@ angular.module('contabilizeiApp.buscar_notas', ['ngRoute'])
                 $scope.notas = data.result.notas;
             });
             res.error(function (data, status, headers, config) {
-                $scope.mensagemStatus = 'Erro ao realizar a ação.';
+                $scope.mensagemStatus = $sce.trustAsHtml('Erro ao realizar a ação.');
             });
         };
     }]);

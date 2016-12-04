@@ -9,10 +9,11 @@ angular.module('contabilizeiApp.buscar_impostos', ['ngRoute'])
         });
     }])
 
-    .controller('BuscarImpostosCtrl', ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
+    .controller('BuscarImpostosCtrl', ['$scope', '$http', '$sce', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, $sce, backendAddress) {
         var dataObj = {
             'maxPorPagina': 1000
         };
+
         $scope.impostos = [];
         var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/consulta/clientes', dataObj);
 
@@ -20,12 +21,14 @@ angular.module('contabilizeiApp.buscar_impostos', ['ngRoute'])
             $scope.clientes = data.result.clientes;
         });
         res.error(function (data, status, headers, config) {
-            console.error('ERROR');
-            console.error(data);
-            alert('failure message: ' + JSON.stringify({data: data}));
+            $scope.mensagemErro = $sce.trustAsHtml('Erro ao recuperar clientes!');
         });
 
         $scope.buscarImpostos = function (clienteId, mes, ano) {
+            // Clean messages
+            $scope.mensagemErro = $sce.trustAsHtml('');
+            $scope.mensagemStatus = $sce.trustAsHtml('');
+
             if (clienteId == undefined || mes == undefined || ano == undefined) {
                 $scope.mensagemErro = 'Por favor selecione todos os valores para a busca.';
                 return;
@@ -41,15 +44,13 @@ angular.module('contabilizeiApp.buscar_impostos', ['ngRoute'])
                 $scope.impostos = data.result.impostos;
             });
             res.error(function (data, status, headers, config) {
-                console.error('ERROR');
-                console.error(data);
-                alert('failure message: ' + JSON.stringify({data: data}));
+                $scope.mensagemErro = $sce.trustAsHtml('Erro ao recuperar impostos!');
             });
         };
 
         $scope.marcarImpostoComoPago = function (clienteId, imposto) {
             if (clienteId == undefined || imposto == undefined) {
-                alert('Erro ao marcar imposto como pago!');
+                $scope.mensagemErro = $sce.trustAsHtml('Erro ao marcar imposto como pago!');
                 return;
             }
             var dataObj = {
@@ -60,10 +61,10 @@ angular.module('contabilizeiApp.buscar_impostos', ['ngRoute'])
 
             res.success(function (data, status, headers, config) {
                 imposto.pago = true;
-                $scope.mensagemStatus = 'Operação realizada com sucesso';
+                $scope.mensagemStatus = $sce.trustAsHtml('Operação realizada com sucesso');
             });
             res.error(function (data, status, headers, config) {
-                $scope.mensagemStatus = 'Erro ao realizar a ação.';
+                $scope.mensagemStatus = $sce.trustAsHtml('Erro ao realizar a ação.');
             });
         };
     }]);

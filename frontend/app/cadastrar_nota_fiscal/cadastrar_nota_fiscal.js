@@ -9,11 +9,12 @@ angular.module('contabilizeiApp.cadastrar_nota_fiscal', ['ngRoute'])
         });
     }])
 
-    .controller('CadastrarNotaFiscalCtrl', ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
+    .controller('CadastrarNotaFiscalCtrl', ['$scope', '$http', '$sce', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, $sce, backendAddress) {
         $scope.anexos = {};
         var dataObj = {
             'maxPorPagina': 1000
         };
+
         $scope.notas = [];
         var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/consulta/clientes', dataObj);
 
@@ -21,12 +22,12 @@ angular.module('contabilizeiApp.cadastrar_nota_fiscal', ['ngRoute'])
             $scope.clientes = data.result.clientes;
         });
         res.error(function (data, status, headers, config) {
-            console.error('ERROR');
-            console.error(data);
-            alert('failure message: ' + JSON.stringify({data: data}));
+            $scope.mensagemErro = $sce.trustAsHtml('Erro ao recuperar clientes!');
         });
 
         $scope.cadastrarNotaFiscal = function (clienteId) {
+            // Clean messages
+            $scope.mensagemStatus = $sce.trustAsHtml('');
 
             var formData = $scope.cadastroNotaForm;
 
@@ -41,10 +42,10 @@ angular.module('contabilizeiApp.cadastrar_nota_fiscal', ['ngRoute'])
             var res = $http.put(backendAddress.url + ':' + backendAddress.port + '/cadastro/nota_fiscal', dataObj);
 
             res.success(function (data, status, headers, config) {
-                $scope.mensagemStatus = 'Nota Fiscal cadastrada';
+                $scope.mensagemStatus = $sce.trustAsHtml('Nota Fiscal cadastrada');
             });
             res.error(function (data, status, headers, config) {
-                $scope.mensagemStatus = 'Erro ao realizar a ação.';
+                $scope.mensagemErro = $sce.trustAsHtml('Erro ao realizar a ação.');
             });
         };
     }]);

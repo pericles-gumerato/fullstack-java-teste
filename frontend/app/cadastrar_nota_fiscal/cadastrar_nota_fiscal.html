@@ -1,18 +1,30 @@
-<div ng-app="contabilizeiApp" class="client-selector">
-    Cadastro de Nota Fiscal
-    <div ng-controller="CadastrarNotaFiscalCtrl">
+<div ng-app="contabilizeiApp" class="contabilizei-app">
+    <h3>Cadastro de notas fiscais</h3>
+    <div ng-controller="CadastrarNotaFiscalCtrl" class="controller-input-div">
 
         <form name="cadastroNotaForm" ng-submit="cadastrarNotaFiscal(clienteId)" novalidate>
 
-            <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
-            Cliente:
-            <select name="cliente.razaoSocial" ng-model="clienteId"
-                    ng-options="cliente.id as cliente.razaoSocial for cliente in clientes"></select>
-
             <div class="form-group">
                 <ng-form name="cadastroNotaForm">
-                    <label>Numero</label>
-                    <input type="number" class="form-control" name="numero" ng-model="numero" required>
+
+                    <div>
+                        <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
+                        <label for="cliente.razaoSocial">Cliente:</label>
+                        <select name="cliente.razaoSocial" id="cliente.razaoSocial" ng-model="clienteId"
+                                ng-options="cliente.id as cliente.razaoSocial for cliente in clientes"></select>
+                    </div>
+
+                    <div>
+                        <label>Anexo:</label>
+                        <select name="anexo" ng-model="anexo">
+                            <option label="Comércio" value="0">Comércio</option>
+                            <option label="Indústria" value="1"></option>
+                            <option label="Prestação de Serviços" value="2"></option>
+                        </select>
+                    </div>
+
+                    <label for="numero">Número</label>
+                    <input type="number" class="form-control" name="numero" id="numero" ng-model="numero" required>
 
                     <label>Data Emissão</label>
                     <input type="date" class="form-control" name="dataEmissao" ng-model="dataEmissao" required>
@@ -23,22 +35,16 @@
                     <label>Descrição</label>
                     <input type="text" class="form-control" name="descricao" ng-model="descricao" required>
 
-                    <label>Anexo</label>
-                    <select name="anexo" ng-model="anexo">
-                        <option label="comercio" value="0">Comércio</option>
-                        <option label="industria" value="1">Indústria</option>
-                        <option label="prestacaoServicos" value="2">Prestação de Serviços</option>
-                    </select>
                 </ng-form>
             </div>
 
-            <div>
+            <div class="submit-button">
                 <button type="submit" class="btn btn-default">Cadastrar</button>
             </div>
 
-            {{mensagemStatus}}
+            <div ng-bind-html="mensagemStatus" class="status"></div>
+            <div ng-bind-html="mensagemErro" class="erro"></div>
 
         </form>
-
     </div>
 </div>

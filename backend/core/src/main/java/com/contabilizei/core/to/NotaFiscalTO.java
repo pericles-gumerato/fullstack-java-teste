@@ -33,6 +33,7 @@ public class NotaFiscalTO {
         ret.setDataEmissao(notaFiscal.getDataEmissao());
         ret.setNumero(notaFiscal.getNumero());
         ret.setClienteId(notaFiscal.getClienteId());
+        ret.setAnexo(notaFiscal.getAnexo());
 
         return ret;
     }

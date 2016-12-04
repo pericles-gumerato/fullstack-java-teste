@@ -45,42 +45,118 @@ html * {
     padding-right: 0.3em;
 }
 
-.client-selector {
+.contabilizei-app h3 {
+    padding: 0.5em 1em 0.5em;
+}
+
+.contabilizei-app p {
+    padding: 0 2em 0;
+}
+
+.contabilizei-app .client-selector {
     margin-bottom: 2em;
     padding: 0.5em 0 0.5em 2em;
     font-size: 15px;
 }
 
-.listaItensNotas {
+.contabilizei-app .listaItensNotas {
     list-style: none;
     padding: 0.5em 0.5em 0.5em;
 }
 
-.listaItensNotas > li {
+.contabilizei-app .listaItensNotas > li {
     display: table-cell;
     width: 130px;
     text-align: center;
 }
 
-.listaItensNotas > li + li:before {
+.contabilizei-app .listaItensNotas > li + li:before {
     padding-right: 0.3em;
 }
 
-.listaItensImpostos {
+.contabilizei-app .listaItensImpostos {
     list-style: none;
     padding: 0.5em 0.5em 0.5em;
 }
 
-.listaItensImpostos > li {
+.contabilizei-app .listaItensImpostos > li {
     display: table-cell;
     width: 145px;
     text-align: center;
 }
 
-.listaItensImpostos > li + li:before {
+.contabilizei-app .listaItensImpostos > li + li:before {
     padding-right: 0.3em;
 }
 
-.content {
+.controller-input-div {
+    padding: 1em 3em 1em;
+}
+
+.contabilizei-app .content {
     padding: 0.5em 0.5em 0.5em;
+}
+
+.erro {
+    padding: 0.5em 0.5em 0.5em;
+    font-style: normal;
+    font-weight: bolder;
+    color: #f15151;
+}
+
+.status {
+    padding: 0.5em 0.5em 0.5em;
+    font-style: normal;
+    font-weight: bolder;
+    color: #40bb6e;
+}
+
+.contabilizei-app form label {
+    padding: 0.5em 0.5em 0.5em;
+    font-style: normal;
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.contabilizei-app .submit-button {
+    padding: 1em;
+}
+
+.contabilizei-app form input {
+    padding: 0.5em 0.5em 0.5em;
+    font-style: normal;
+    font-weight: bolder;
+    width: 500px;
+}
+
+.contabilizei-app form select {
+    padding: 0.5em 0.5em 0.5em;
+    font-style: normal;
+    font-weight: bolder;
+}
+
+.controller-input-div label {
+    border: 20px;
+    width: 200px;
+}
+
+.controller-input-div select {
+    border: 20px;
+    width: 200px;
+}
+
+.controller-input-div .cadastro-cliente-anexos .cadastro-cliente-anexos-label {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.controller-input-div .cadastro-cliente-anexos label {
+    margin: 0;
+    display: inline;
+}
+
+.controller-input-div form .cadastro-cliente-anexos input[type="checkbox"] {
+    width: inherit;
+    display: inline-block;
 }

@@ -1,40 +1,58 @@
-<div ng-app="contabilizeiApp" class="client-selector">
-    Cadastro de Cliente
-    <div ng-controller="CadastrarClienteCtrl">
+<div ng-app="contabilizeiApp" class="contabilizei-app">
+    <h3>Cadastro de clientes</h3>
+    <div ng-controller="CadastrarClienteCtrl" class="controller-input-div">
 
         <form name="cadastroClienteForm" ng-submit="cadastrarCliente()" novalidate>
 
             <div class="form-group">
                 <ng-form name="cadastroClienteForm">
-                    <label>Razão Social</label>
-                    <input type="text" class="form-control" name="razaoSocial" ng-model="razaoSocial" required>
 
-                    <label>CNPJ</label>
-                    <input type="number" class="form-control" name="cnpj" ng-model="cnpj" required>
-                    {{erroCnpj}}
-
-                    <label>Regime Tributario</label>
-                    <select name="regimeTributario" ng-model="regimeTributario">
-                        <option label="SimplesNacional" value="0">Simples Nacional</option>
-                        <option label="LucroPresumido" value="1">Lucro Presumido</option>
-                    </select>
-
-                    <label>Anexos</label>
-                    <switch name="anexos">
-                        <input type="checkbox" value="comercio" ng-model="anexos[0]">Comércio</input>
-                        <input type="checkbox" value="industria" ng-model="anexos[1]">Indústria</input>
-                        <input type="checkbox" value="prestacaoservicos" ng-model="anexos[2]">Prestação de Serviços</input>
-                    </switch>
+                    <div>
+                        <label>Regime Tributário</label>
+                        <select name="regimeTributario" ng-model="regimeTributario">
+                            <option label="SimplesNacional" value="0">Simples Nacional</option>
+                            <option label="LucroPresumido" value="1">Lucro Presumido</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Razão Social</label>
+                        <input type="text" class="form-control" name="razaoSocial" ng-model="razaoSocial" required>
+                    </div>
+                    <div>
+                        <label>CNPJ</label>
+                        <input type="number" class="form-control" name="cnpj" ng-model="cnpj" required>
+                        {{erroCnpj}}
+                    </div>
+                    <div class="cadastro-cliente-anexos">
+                        <div class="cadastro-cliente-anexos-label">
+                            <label>Anexos</label>
+                        </div>
+                        <switch name="anexos">
+                            <div>
+                                <input type="checkbox" value="comercio" id="comercio" ng-model="anexos[0]"><label
+                                    for="comercio">Comércio</label></input>
+                            </div>
+                            <input type="checkbox" value="industria" id="industria" ng-model="anexos[1]"><label
+                                for="industria">Indústria</label></input>
+                            <div>
+                            </div>
+                            <div>
+                                <input type="checkbox" value="prestacaoservicos" id="prestacaoservicos"
+                                       ng-model="anexos[2]"><label for="prestacaoservicos">Prestação de
+                                Serviços</label></input>
+                            </div>
+                        </switch>
+                    </div>
                 </ng-form>
             </div>
 
-            <div>
+            <div class="submit-button">
                 <button type="submit" class="btn btn-default">Cadastrar</button>
             </div>
 
-            {{mensagemStatus}}
+            <div ng-bind-html="mensagemStatus" class="status"></div>
+            <div ng-bind-html="mensagemErro" class="erro"></div>
 
         </form>
-
     </div>
 </div>

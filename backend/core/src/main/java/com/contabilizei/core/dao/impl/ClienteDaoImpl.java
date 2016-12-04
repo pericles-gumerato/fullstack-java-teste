@@ -49,6 +49,9 @@ public class ClienteDaoImpl implements ClienteDao {
 
         Cliente cliente = entityManager.find(Cliente.class, id);
 
+        // initialize anexos
+        cliente.getAnexos().size();
+
         entityManager.getTransaction().commit();
         entityManager.close();
 

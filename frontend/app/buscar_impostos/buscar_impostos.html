@@ -1,69 +1,77 @@
-<div ng-app="contabilizeiApp" class="client-selector">
-    <p>Busca de impostos</p>
-    Selecione os dados:
-    <div ng-controller="BuscarImpostosCtrl">
+<div ng-app="contabilizeiApp" class="contabilizei-app">
+    <h3>Buscar impostos</h3>
+    <p>Selecione os dados:</p>
+    <div ng-controller="BuscarImpostosCtrl" class="controller-input-div">
         <div>
-            <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
-            Cliente:
-            <select name="cliente.razaoSocial" ng-model="clienteId"
-                    ng-options="cliente.id as cliente.razaoSocial for cliente in clientes"></select>
+            <div>
+                <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
+                <label for="cliente">Cliente:</label>
+                <select id="cliente" name="cliente.razaoSocial" ng-model="clienteId"
+                        ng-options="cliente.id as cliente.razaoSocial for cliente in clientes"></select>
+            </div>
+            <div>
+                <label for="mes">Mês:</label>
+                <select name="mes" id="mes" ng-model="mes">
+                    <option label="Janeiro" value="1">Janeiro</option>
+                    <option label="Fevereiro" value="2">Fevereiro</option>
+                    <option label="Março" value="3">Março</option>
+                    <option label="Abril" value="4">Abril</option>
+                    <option label="Maio" value="5">Maio</option>
+                    <option label="Junho" value="6">Junho</option>
+                    <option label="Julho" value="7">Julho</option>
+                    <option label="Agosto" value="8">Agosto</option>
+                    <option label="Setembro" value="9">Setembro</option>
+                    <option label="Outubro" value="10">Outubro</option>
+                    <option label="Novembro" value="11">Novembro</option>
+                    <option label="Dezembro" value="12">Dezembro</option>
+                </select>
+            </div>
+            <div>
+                <label for="ano">Ano:</label>
+                <select name="ano" id="ano" ng-model="ano">
+                    <option label="2016" value="2016">2016</option>
+                    <option label="2015" value="2015">2015</option>
+                    <option label="2014" value="2014">2014</option>
+                    <option label="2013" value="2013">2013</option>
+                    <option label="2012" value="2012">2012</option>
+                </select>
+            </div>
 
-            Mês:
-            <select name="ano" ng-model="mes">
-                <option label="Janeiro" value="1">Janeiro</option>
-                <option label="Fevereiro" value="2">Fevereiro</option>
-                <option label="Março" value="3">Março</option>
-                <option label="Abril" value="4">Abril</option>
-                <option label="Maio" value="5">Maio</option>
-                <option label="Junho" value="6">Junho</option>
-                <option label="Julho" value="7">Julho</option>
-                <option label="Agosto" value="8">Agosto</option>
-                <option label="Setembro" value="9">Setembro</option>
-                <option label="Outubro" value="10">Outubro</option>
-                <option label="Novembro" value="11">Novembro</option>
-                <option label="Dezembro" value="12">Dezembro</option>
-            </select>
-            Ano:
-            <select name="ano" ng-model="ano">
-                <option label="2016" value="2016">2016</option>
-                <option label="2015" value="2015">2015</option>
-                <option label="2014" value="2014">2014</option>
-                <option label="2013" value="2013">2013</option>
-                <option label="2012" value="2012">2012</option>
-            </select>
-
-            {{mensagemErro}}
+            <div ng-bind-html="mensagemErro" class="erro"></div>
         </div>
-        <div>
+
+        <div class="submit-button">
             <button type="button" class="btn btn-default" ng-click="buscarImpostos(clienteId, mes, ano)">Buscar</button>
         </div>
 
-        {{mensagemStatus}}
+        <div ng-bind-html="mensagemStatus" class="status"></div>
 
-        <div>
+        <table class="table table-striped">
             <div ng-if="impostos == undefined">
                 Nenhum imposto encontrado.
             </div>
-            <ul ng-if="impostos.length" class="listaItensImpostos">
-                <li>ID</li>
-                <li>Tipo</li>
-                <li>Vencimento</li>
-                <li>Valor</li>
-                <li>Pago</li>
-                <li>Marcar como pago</li>
-            </ul>
-            <ul ng-repeat="imposto in impostos" class="listaItensImpostos">
-                <li>{{ imposto.id }}</li>
-                <li>{{ imposto.tipo }}</li>
-                <li>{{ imposto.vencimento }}</li>
-                <li>R$ {{ imposto.valorCentavos / 100 | number:2}}</li>
-                <li>{{ imposto.pago }}</li>
-                <li>
+            <thead ng-if="impostos.length" class="listaItensImpostos">
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Vencimento</th>
+            <th>Valor</th>
+            <th>Pago</th>
+            <th>Marcar como pago</th>
+            </thead>
+            <tbody>
+            <tr ng-repeat="imposto in impostos" class="listaItensImpostos">
+                <th>{{ imposto.id }}</th>
+                <th>{{ imposto.tipo }}</th>
+                <th>{{ imposto.vencimento }}</th>
+                <th>R$ {{ imposto.valorCentavos / 100 | number:2}}</th>
+                <th>{{ imposto.pago }}</th>
+                <th>
                     <button type="button" class="btn btn-default" ng-click="marcarImpostoComoPago(clienteId, imposto)">
                         Marcar como Pago
                     </button>
-                </li>
-            </ul>
-        </div>
+                </th>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>

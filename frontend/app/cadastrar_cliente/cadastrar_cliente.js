@@ -9,14 +9,18 @@ angular.module('contabilizeiApp.cadastrar_cliente', ['ngRoute'])
         });
     }])
 
-    .controller('CadastrarClienteCtrl', ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
+    .controller('CadastrarClienteCtrl', ['$scope', '$http', '$sce', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, $sce, backendAddress) {
         $scope.anexos = {};
         $scope.cadastrarCliente = function () {
+
+            // Clean messages
+            $scope.mensagemErro = $sce.trustAsHtml('');
+            $scope.mensagemStatus = $sce.trustAsHtml('');
 
             var formData = $scope.cadastroClienteForm;
 
             if (isNaN(Number(formData.cnpj.$modelValue))) {
-                $scope.erroCnpj = 'O cnpj somente pode conter números.'
+                $scope.erroCnpj = 'Por favor prencha um cnpj com números somente.'
                 return;
             }
 
@@ -36,10 +40,10 @@ angular.module('contabilizeiApp.cadastrar_cliente', ['ngRoute'])
             var res = $http.put(backendAddress.url + ':' + backendAddress.port + '/cadastro/cliente', dataObj);
 
             res.success(function (data, status, headers, config) {
-                $scope.mensagemStatus = 'Cliente cadastrado';
+                $scope.mensagemStatus = $sce.trustAsHtml('Cliente cadastrado');
             });
             res.error(function (data, status, headers, config) {
-                $scope.mensagemStatus = 'Erro ao realizar a ação.';
+                $scope.mensagemErro = $sce.trustAsHtml('Erro ao realizar a ação.');
             });
         };
     }]);

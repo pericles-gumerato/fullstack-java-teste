@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('contabilizeiApp', [
     'ngRoute',
+    'ngSanitize',
     'contabilizeiApp.buscar_impostos',
     'contabilizeiApp.buscar_notas',
     'contabilizeiApp.cadastrar_cliente',
