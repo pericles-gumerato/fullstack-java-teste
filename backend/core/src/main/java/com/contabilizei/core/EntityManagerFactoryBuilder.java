@@ -1,5 +1,10 @@
 package com.contabilizei.core;
 
+import com.netflix.config.DynamicIntProperty;
+import com.netflix.config.DynamicProperty;
+
+import java.util.Properties;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
