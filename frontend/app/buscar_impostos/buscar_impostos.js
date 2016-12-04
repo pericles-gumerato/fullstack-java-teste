@@ -9,9 +9,9 @@ angular.module('contabilizeiApp.buscar_impostos', ['ngRoute'])
         });
     }])
 
-    .controller("BuscarImpostosCtrl", ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
+    .controller('BuscarImpostosCtrl', ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
         var dataObj = {
-            "maxPorPagina": 1000
+            'maxPorPagina': 1000
         };
         $scope.impostos = [];
         var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/consulta/clientes', dataObj);
@@ -22,7 +22,7 @@ angular.module('contabilizeiApp.buscar_impostos', ['ngRoute'])
         res.error(function (data, status, headers, config) {
             console.error('ERROR');
             console.error(data);
-            alert("failure message: " + JSON.stringify({data: data}));
+            alert('failure message: ' + JSON.stringify({data: data}));
         });
 
         $scope.buscarImpostos = function (clienteId, mes, ano) {
@@ -31,9 +31,9 @@ angular.module('contabilizeiApp.buscar_impostos', ['ngRoute'])
                 return;
             }
             var dataObj = {
-                "clienteId": clienteId,
-                "mes": mes,
-                "ano": ano
+                'clienteId': clienteId,
+                'mes': mes,
+                'ano': ano
             };
             var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/consulta/impostos_mes', dataObj);
 
@@ -43,7 +43,7 @@ angular.module('contabilizeiApp.buscar_impostos', ['ngRoute'])
             res.error(function (data, status, headers, config) {
                 console.error('ERROR');
                 console.error(data);
-                alert("failure message: " + JSON.stringify({data: data}));
+                alert('failure message: ' + JSON.stringify({data: data}));
             });
         };
 
@@ -53,19 +53,17 @@ angular.module('contabilizeiApp.buscar_impostos', ['ngRoute'])
                 return;
             }
             var dataObj = {
-                "clienteId": clienteId,
-                "impostoId": imposto.id
+                'clienteId': clienteId,
+                'impostoId': imposto.id
             };
             var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/update/marcar_imposto_como_pago', dataObj);
 
             res.success(function (data, status, headers, config) {
                 imposto.pago = true;
-                alert('Imposto marcado com sucesso!');
+                $scope.mensagemStatus = 'Operação realizada com sucesso';
             });
             res.error(function (data, status, headers, config) {
-                console.error('ERROR');
-                console.error(data);
-                alert("failure message: " + JSON.stringify({data: data}));
+                $scope.mensagemStatus = 'Erro ao realizar a ação.';
             });
         };
     }]);

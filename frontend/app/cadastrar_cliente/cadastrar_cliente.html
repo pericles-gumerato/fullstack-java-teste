@@ -1,14 +1,40 @@
 <div ng-app="contabilizeiApp" class="client-selector">
-    Selecione um cliente:
-    <div ng-controller="ConsultaClientesCtrl">
+    Cadastro de Cliente
+    <div ng-controller="CadastrarClienteCtrl">
 
-        <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
-        <select name="cliente.razaoSocial" ng-model="model.id"
-                ng-options="cliente.id as cliente.razaoSocial for cliente in clientes"></select>
+        <form name="cadastroClienteForm" ng-submit="cadastrarCliente()" novalidate>
 
-        <div>
-            Selected id:{{model.id}}
-        </div>
+            <div class="form-group">
+                <ng-form name="cadastroClienteForm">
+                    <label>Razão Social</label>
+                    <input type="text" class="form-control" name="razaoSocial" ng-model="razaoSocial" required>
+
+                    <label>CNPJ</label>
+                    <input type="number" class="form-control" name="cnpj" ng-model="cnpj" required>
+                    {{erroCnpj}}
+
+                    <label>Regime Tributario</label>
+                    <select name="regimeTributario" ng-model="regimeTributario">
+                        <option label="SimplesNacional" value="0">Simples Nacional</option>
+                        <option label="LucroPresumido" value="1">Lucro Presumido</option>
+                    </select>
+
+                    <label>Anexos</label>
+                    <switch name="anexos">
+                        <input type="checkbox" value="comercio" ng-model="anexos[0]">Comércio</input>
+                        <input type="checkbox" value="industria" ng-model="anexos[1]">Indústria</input>
+                        <input type="checkbox" value="prestacaoservicos" ng-model="anexos[2]">Prestação de Serviços</input>
+                    </switch>
+                </ng-form>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-default">Cadastrar</button>
+            </div>
+
+            {{mensagemStatus}}
+
+        </form>
 
     </div>
 </div>

@@ -1,7 +1,7 @@
 <div ng-app="contabilizeiApp" class="client-selector">
     <p>Cálculo de impostos</p>
     Selecione um cliente:
-    <div ng-controller="ConsultaClientesCtrl">
+    <div ng-controller="CalcularImpostosCtrl">
 
         <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
         Cliente:
@@ -39,6 +39,8 @@
                 impostos
             </button>
         </div>
+
+        {{mensagemStatus}}
 
     </div>
 </div>

@@ -37,9 +37,12 @@
         <div>
             <button type="button" class="btn btn-default" ng-click="buscarImpostos(clienteId, mes, ano)">Buscar</button>
         </div>
+
+        {{mensagemStatus}}
+
         <div>
             <div ng-if="impostos == undefined">
-                Nenhuma imposto encontrado.
+                Nenhum imposto encontrado.
             </div>
             <ul ng-if="impostos.length" class="listaItensImpostos">
                 <li>ID</li>

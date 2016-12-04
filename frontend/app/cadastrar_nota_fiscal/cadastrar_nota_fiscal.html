@@ -1,14 +1,44 @@
 <div ng-app="contabilizeiApp" class="client-selector">
-    Selecione um cliente:
-    <div ng-controller="ConsultaClientesCtrl">
+    Cadastro de Nota Fiscal
+    <div ng-controller="CadastrarNotaFiscalCtrl">
 
-        <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
-        <select name="cliente.razaoSocial" ng-model="model.id"
-                ng-options="cliente.id as cliente.razaoSocial for cliente in clientes"></select>
+        <form name="cadastroNotaForm" ng-submit="cadastrarNotaFiscal(clienteId)" novalidate>
 
-        <div>
-            Selected id:{{model.id}}
-        </div>
+            <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
+            Cliente:
+            <select name="cliente.razaoSocial" ng-model="clienteId"
+                    ng-options="cliente.id as cliente.razaoSocial for cliente in clientes"></select>
+
+            <div class="form-group">
+                <ng-form name="cadastroNotaForm">
+                    <label>Numero</label>
+                    <input type="number" class="form-control" name="numero" ng-model="numero" required>
+
+                    <label>Data Emissão</label>
+                    <input type="date" class="form-control" name="dataEmissao" ng-model="dataEmissao" required>
+
+                    <label>Valor</label>
+                    <input type="number" class="form-control" name="valor" ng-model="valor" required>
+
+                    <label>Descrição</label>
+                    <input type="text" class="form-control" name="descricao" ng-model="descricao" required>
+
+                    <label>Anexo</label>
+                    <select name="anexo" ng-model="anexo">
+                        <option label="comercio" value="0">Comércio</option>
+                        <option label="industria" value="1">Indústria</option>
+                        <option label="prestacaoServicos" value="2">Prestação de Serviços</option>
+                    </select>
+                </ng-form>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-default">Cadastrar</button>
+            </div>
+
+            {{mensagemStatus}}
+
+        </form>
 
     </div>
 </div>

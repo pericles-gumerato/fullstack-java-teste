@@ -7,8 +7,7 @@ angular.module('contabilizeiApp', [
     'contabilizeiApp.buscar_notas',
     'contabilizeiApp.cadastrar_cliente',
     'contabilizeiApp.cadastrar_nota_fiscal',
-    'contabilizeiApp.calcular_impostos',
-    'contabilizeiApp.consulta_clientes'
+    'contabilizeiApp.calcular_impostos'
 ]).constant("BACKEND_SERVER_ADDRESS", {
     "url": "http://localhost",
     "port": "8080"

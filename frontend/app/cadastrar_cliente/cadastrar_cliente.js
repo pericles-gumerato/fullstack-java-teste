@@ -9,18 +9,37 @@ angular.module('contabilizeiApp.cadastrar_cliente', ['ngRoute'])
         });
     }])
 
-    .controller("CadastrarClienteCtrl", ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
-        var dataObj = {
-            "maxPorPagina": 1000
-        };
-        var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/consulta/clientes', dataObj);
+    .controller('CadastrarClienteCtrl', ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
+        $scope.anexos = {};
+        $scope.cadastrarCliente = function () {
 
-        res.success(function (data, status, headers, config) {
-            $scope.clientes = data.result.clientes;
-        });
-        res.error(function (data, status, headers, config) {
-            console.error('ERROR');
-            console.error(data);
-            alert("failure message: " + JSON.stringify({data: data}));
-        });
+            var formData = $scope.cadastroClienteForm;
+
+            if (isNaN(Number(formData.cnpj.$modelValue))) {
+                $scope.erroCnpj = 'O cnpj somente pode conter números.'
+                return;
+            }
+
+            var anexosEnvio = [];
+            for (var i = 0; i < 3; i++) {
+                if ($scope.anexos[i] == true) {
+                    anexosEnvio.push(i);
+                }
+            }
+
+            var dataObj = {
+                'razaoSocial': formData.razaoSocial.$modelValue,
+                'cnpj': formData.cnpj.$modelValue,
+                'regimeTributario': formData.regimeTributario.$modelValue,
+                'anexos': anexosEnvio
+            };
+            var res = $http.put(backendAddress.url + ':' + backendAddress.port + '/cadastro/cliente', dataObj);
+
+            res.success(function (data, status, headers, config) {
+                $scope.mensagemStatus = 'Cliente cadastrado';
+            });
+            res.error(function (data, status, headers, config) {
+                $scope.mensagemStatus = 'Erro ao realizar a ação.';
+            });
+        };
     }]);
