@@ -1,14 +1,64 @@
 <div ng-app="contabilizeiApp" class="client-selector">
-    Selecione um cliente:
-    <div ng-controller="ConsultaClientesCtrl">
-
-        <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
-        <select name="cliente.razaoSocial" ng-model="model.id"
-                ng-options="cliente.id as cliente.razaoSocial for cliente in clientes"></select>
-
+    Selecione os dados:
+    <div ng-controller="BuscarNotasCtrl">
         <div>
-            Selected id:{{model.id}}
-        </div>
+            <div ng-repeat="(id,razaoSocial) in clientes">{{text}}</div>
+            Cliente:
+            <select name="cliente.razaoSocial" ng-model="clienteId"
+                    ng-options="cliente.id as cliente.razaoSocial for cliente in clientes"></select>
 
+            Mês:
+            <select name="ano" ng-model="mes">
+                <option label="Janeiro" value="1">Janeiro</option>
+                <option label="Fevereiro" value="2">Fevereiro</option>
+                <option label="Março" value="3">Março</option>
+                <option label="Abril" value="4">Abril</option>
+                <option label="Maio" value="5">Maio</option>
+                <option label="Junho" value="6">Junho</option>
+                <option label="Julho" value="7">Julho</option>
+                <option label="Agosto" value="8">Agosto</option>
+                <option label="Setembro" value="9">Setembro</option>
+                <option label="Outubro" value="10">Outubro</option>
+                <option label="Novembro" value="11">Novembro</option>
+                <option label="Dezembro" value="12">Dezembro</option>
+            </select>
+            Ano:
+            <select name="ano" ng-model="ano">
+                <option label="2016" value="2016">2016</option>
+                <option label="2015" value="2015">2015</option>
+                <option label="2014" value="2014">2014</option>
+                <option label="2013" value="2013">2013</option>
+                <option label="2012" value="2012">2012</option>
+            </select>
+
+            {{mensagemErro}}
+        </div>
+        <div>
+            <button type="button" class="btn btn-default" ng-click="buscarNotas(clienteId, mes, ano)">Buscar</button>
+        </div>
+        <div>
+            Selected id:{{clienteId}}
+        </div>
+        <div>
+            <div ng-if="notas == undefined">
+                Nenhuma nota encontrada.
+            </div>
+            <ul ng-if="notas.length" class="listaItensNotas">
+                <li>ID</li>
+                <li>Número</li>
+                <li>Data de Emissão</li>
+                <li>Valor</li>
+                <li>Anexo</li>
+                <li class="listaItensDescricao">Descrição</li>
+            </ul>
+            <ul ng-repeat="nota in notas" class="listaItensNotas">
+                <li>{{ nota.id }}</li>
+                <li>{{ nota.numero }}</li>
+                <li>{{ nota.dataEmissao }}</li>
+                <li>R$ {{ nota.valorCentavos / 100 | number:2}}</li>
+                <li>{{ nota.anexo }}</li>
+                <li class="listaItensDescricao">{{ nota.descricao }}</li>
+            </ul>
+        </div>
     </div>
 </div>

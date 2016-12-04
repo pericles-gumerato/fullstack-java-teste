@@ -64,7 +64,7 @@ public class ClienteDaoImpl implements ClienteDao {
         entityManager.getTransaction().begin();
 
         Query query = entityManager.createQuery("SELECT c FROM Cliente c");
-        List<Cliente> clientes = query.setMaxResults(pageSize).setFirstResult(pageNumber * pageSize).getResultList();
+        List<Cliente> clientes = query.setMaxResults(pageSize).setFirstResult(pageNumber * pageSize - pageSize).getResultList();
 
         entityManager.getTransaction().commit();
         entityManager.close();

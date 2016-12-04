@@ -26,15 +26,15 @@ html *
     list-style: none;
     border-bottom: 0.2em solid black;
     margin-bottom: 2em;
-    padding: 0.5em 0 0.5em;
+    padding: 0.5em 0.5em 0.5em;
 }
 
 .menu:before {
-    content: "[";
+    content: "|";
 }
 
 .menu:after {
-    content: "]";
+    content: "|";
 }
 
 .menu > li {
@@ -50,4 +50,39 @@ html *
     margin-bottom: 2em;
     padding: 0.5em 0 0.5em 2em;
     font-size: 15px;
+}
+
+.listaItensNotas {
+    list-style: none;
+    padding: 0.5em 0.5em 0.5em;
+}
+
+.listaItensNotas > li {
+    display: table-cell;
+    width: 130px;
+    text-align: center;
+}
+
+.listaItensNotas > li + li:before {
+    padding-right: 0.3em;
+}
+
+
+.listaItensImpostos {
+    list-style: none;
+    padding: 0.5em 0.5em 0.5em;
+}
+
+.listaItensImpostos > li {
+    display: table-cell;
+    width: 145px;
+    text-align: center;
+}
+
+.listaItensImpostos > li + li:before {
+    padding-right: 0.3em;
+}
+
+.content {
+    padding: 0.5em 0.5em 0.5em;
 }

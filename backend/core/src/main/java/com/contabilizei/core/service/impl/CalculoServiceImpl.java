@@ -70,8 +70,8 @@ public class CalculoServiceImpl implements CalculoService {
             return response;
         }
 
-        int page = 1;
-        List<NotaFiscal> notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, page);
+        int pagina = 1;
+        List<NotaFiscal> notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, pagina);
         if (notasFiscaisMes.size() == 0) {
             response.setSucesso(false);
             response.setMensagem("Não existem notas fiscais para o ano e mês de referência");
@@ -88,8 +88,8 @@ public class CalculoServiceImpl implements CalculoService {
             }
 
             // Get next fiscal notes
-            page++;
-            notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, page);
+            pagina++;
+            notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, pagina);
         }
 
         // Compute date
@@ -122,8 +122,8 @@ public class CalculoServiceImpl implements CalculoService {
             return response;
         }
 
-        int page = 1;
-        List<NotaFiscal> notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, page);
+        int pagina = 1;
+        List<NotaFiscal> notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, pagina);
         if (notasFiscaisMes.size() == 0) {
             response.setSucesso(false);
             response.setMensagem("Não existem notas fiscais para o ano e mês de referência");
@@ -137,8 +137,8 @@ public class CalculoServiceImpl implements CalculoService {
             }
 
             // Get next fiscal notes
-            page++;
-            notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, page);
+            pagina++;
+            notasFiscaisMes = notaFiscalDao.consultaNotasFiscais(cliente.getId(), mesAnoReferencia, TAMANHO_BATCH_NOTAS_CALCULO, pagina);
         }
 
         // Compute date

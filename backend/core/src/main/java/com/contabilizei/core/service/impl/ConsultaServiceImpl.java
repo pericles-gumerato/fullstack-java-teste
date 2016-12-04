@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
  */
 public class ConsultaServiceImpl implements ConsultaService {
 
-    private static final int DEFAULT_MAX_RESULTS_PER_PAGE = 10; // If the client does not send, we'll lock the page size to 10.
-    private static final int GLOBAL_MAX_RESULTS_PER_PAGE = 100; // Let's define a global max to avoid requests with 1M results per page.
+    private static final int DEFAULT_MAX_RESULTS_PER_PAGE = 20; // If the client does not send, we'll lock the page size to 10.
+    private static final int GLOBAL_MAX_RESULTS_PER_PAGE = 1000; // Let's define a global max to avoid requests with 1M results per page.
 
     private final ClienteDao clienteDao;
     private final ImpostoMesDao impostoMesDao;

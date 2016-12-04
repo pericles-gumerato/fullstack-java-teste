@@ -10,7 +10,9 @@ angular.module('contabilizeiApp.cadastrar_cliente', ['ngRoute'])
     }])
 
     .controller("CadastrarClienteCtrl", ['$scope', '$http', 'BACKEND_SERVER_ADDRESS', function ($scope, $http, backendAddress) {
-        var dataObj = {};
+        var dataObj = {
+            "maxPorPagina" : 1000
+        };
         var res = $http.post(backendAddress.url + ':' + backendAddress.port + '/consulta/clientes', dataObj);
 
         res.success(function (data, status, headers, config) {
